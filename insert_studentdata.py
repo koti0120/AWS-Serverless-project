@@ -1,0 +1,40 @@
+import json
+import boto3
+
+# Create a DynamoDB object using the AWS SDK
+dynamodb = boto3.resource('dynamodb')
+
+# Use the DynamoDB object to select our table
+table = dynamodb.Table('studentData')
+
+def lambda_handler(event, context):
+    # Extract student data from event
+    student_id = event['studentid']
+    name = event['name']
+    student_class = event['class']
+    age = event['age']
+
+    # Save student data to the table
+    response = table.put_item(
+        Item={
+            'studentid': student_id,
+            'name': name,
+            'class': student_class,
+            'age': age
+        }
+    )
+
+    # Return a properly formatted JSON object
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Student data saved successfully!')
+    }
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>
+{
+  "studentid": "1",
+  "name": "jenny",
+  "class": "A",
+  "age": "10"
+}
